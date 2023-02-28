@@ -1,0 +1,58 @@
+# Default values for postfix.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# High availability
+replicaCount: 2
+
+# Role Based Access Control
+# Ref: https://kubernetes.io/docs/admin/authorization/rbac/
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  ## The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  name:
+
+# Docker image
+image:
+  repository: ghcr.io/prasadkris/postfix-relay
+  tag: master 
+  pullPolicy: IfNotPresent
+
+# Expose pods with service on port 25
+service:
+  type: ClusterIP
+  port: 25
+  loadBalancerIP:
+
+# SMTP server details, Used by postfix to connect to SMTP server
+smtp:
+  relayHost: "[smtp.gmail.com]:587"
+  relayMyhostname: <svc-name>.<namespace>.svc.cluster.local
+  relayUsername: XXXXXXXX@gmail.com
+  relayPassword: XXXXXXXXXXXX 
+  relayNetworks: '10.0.0.0/8,127.0.0.0/8,172.17.0.0/16,192.0.0.0/8'
+
+# Optional extra configuration to add or edit in /etc/postfix/main.cf
+# A single string with key=value separated by a semicolon char (;)
+# Example: postfixCustomConfig: "key1 = value1; key2 = value2; key3 = value3"
+postfixCustomConfig: 
+   "smtp_sasl_auth_enable = yes;smtp_sasl_security_options = noanonymous;smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd;smtp_tls_security_level = encrypt;smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt"
+
+# Resources needed for the pods
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
