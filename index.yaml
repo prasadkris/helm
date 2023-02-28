@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  postfix:
+  - apiVersion: v1
+    appVersion: "0.7"
+    created: "2023-02-28T07:26:34.040662168Z"
+    description: A Helm chart for a highly available postfix relay in Kubernetes
+    digest: 98533ad522ba067d806466353cbf30d210baa7aadb8463833b696cf75c3ae584
+    keywords:
+    - postfix
+    maintainers:
+    - email: eldada@jfrog.com
+      name: eldada
+    name: postfix
+    sources:
+    - https://github.com/eldada/postfix-relay-kubernetes
+    urls:
+    - https://github.com/prasadkris/helm/releases/download/postfix-0.1.7/postfix-0.1.7.tgz
+    version: 0.1.7
+generated: "2023-02-28T07:26:33.915316983Z"
